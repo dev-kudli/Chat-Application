@@ -1,16 +1,17 @@
-const userModal = require("../model/userModel.js");
+const userModel = require("../model/userModel.js");
+const userGroupModel = require("../model/userModel.js");
 
 // user sign up
 const addUser = async (request, response) => {
   try {
-    let exist = await userModal.findOne({ sub: request.body.sub });
+    let exist = await userModel.findOne({ sub: request.body.sub });
 
     if (exist) {
       response.status(200).json("user already exists");
       return;
     }
 
-    const newUser = new userModal(request.body);
+    const newUser = new userModel(request.body);
     await newUser.save();
     response.status(200).json(newUser);
   } catch (error) {
@@ -21,7 +22,7 @@ const addUser = async (request, response) => {
 // user sign in
 const getUser = async (request, response) => {
   try {
-    const user = await userModal.find({});
+    const user = await userModel.find({});
     response.status(200).json(user);
   } catch (error) {
     response.status(500).json(error);
@@ -31,8 +32,8 @@ const getUser = async (request, response) => {
 // all groups joined by a user
 const getUserGroups = async (request, response) => {
   try {
-    const user = await userModal.find({});
-    response.status(200).json(user);
+    const userGroups = await userGroupModel.findOne({ sub: request.body.sub });
+    response.status(200).json(userGroups);
   } catch (error) {
     response.status(500).json(error);
   }
@@ -41,4 +42,5 @@ const getUserGroups = async (request, response) => {
 module.exports = {
   addUser,
   getUser,
+  getUserGroups,
 };

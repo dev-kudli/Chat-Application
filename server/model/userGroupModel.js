@@ -7,8 +7,8 @@ userGroupSchema = {
   },
   groupId: {
     type: Array,
-    required: true
-  }
+    required: true,
+  },
 };
 
 const model = Schema.createSchema(userGroupSchema, "userGroups");
