@@ -1,15 +1,13 @@
-const messageModal = require("../modal/messageModal.js");
+// recent messages between usaer A and B
+const getRecentMessages = async (request, response) => {
+    try {
+      const user = await userModal.find({});
+      response.status(200).json(user);
+    } catch (error) {
+      response.status(500).json(error);
+    }
+  };
 
-const uploadNewMessage = async (data) => {
-  try {
-    const newMessage = new messageModal(data);
-    await newMessage.save();
-    return true;
-  } catch (error) {
-    throw error
-  }
-};
-
-module.exports = {
-    uploadNewMessage
-};
+  module.exports = {
+    getRecentMessages,
+  };

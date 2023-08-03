@@ -59,6 +59,6 @@ userSchema = {
   },
 };
 
-const modal = Schema.createSchema(userSchema, "users");
+const model = Schema.createSchema(userSchema, "users");
 
-module.exports = modal;
+module.exports = model;
