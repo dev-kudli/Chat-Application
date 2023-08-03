@@ -1,65 +1,35 @@
-const http = require('http');
+const http = require("http");
+const dotenv = require("dotenv");
+const socketIO = require("socket.io");
+const express = require("express");
 
-const dotenv = require('dotenv');
-const socketIO = require('socket.io');
-const express = require('express');
+const { Connection } = require("database");
+const userHandler = require("./src/userHandler");
+const messageHandler = require("./src/messageHandler");
+
+const users = [];
+const WEBSOCKET_PORT = process.env.WEBSOCKET_PORT;
 
 dotenv.config();
-
 const app = express();
 const server = http.createServer(app);
-const io = socketIO(server)
+const io = socketIO(server);
+Connection.connect();
+
+const onConnection = (socket) => {
+  userHandler(io, socket, users);
+  messageHandler(io, socket, users);
+};
 
 // Event listener for new socket connections
-io.on('connection', (socket) => {
-    console.log('user connected')
-
-    //connect
-    socket.on("addUser", userData => {
-        addUser(userData, socket.id);
-        io.emit("getUsers", users);
-    })
-
-    //send message
-    socket.on('sendMessage', (data) => {
-        const user = getUser(data.receiverId);
-        io.to(user.socketId).emit('getMessage', data)
-    })
-
-    //disconnect
-    socket.on('disconnect', () => {
-        console.log('user disconnected');
-        removeUser(socket.id);
-        io.emit('getUsers', users);
-    })
-
-    console.log(users)
-});
+io.on("connection", onConnection);
 
 // Start the WebSocket server listening
-server.listen(process.env.WEBSOCKET_PORT, () => {
-    myInitializationFunction();
+server.listen(WEBSOCKET_PORT, () => {
+  init();
 });
 
 // Your initialization function
-function myInitializationFunction() {
-    console.log('Initialization function called after server start.');
-}
-
-const users = [];
-
-const addUser = (userData, socketId) => {
-    !users.some(user => user.sub === userData.sub) && users.push({ ...userData, socketId });
-}
-
-const removeUser = (socketId) => {
-    const indexToRemove = users.findIndex(user => user.socketId === socketId);
-
-    if (indexToRemove !== -1) {
-        users.splice(indexToRemove, 1);
-    }
-}
-
-const getUser = (userId) => {
-    return users.find(user => user.sub === userId);
+function init() {
+  console.log(`Socket listening on ${WEBSOCKET_PORT}`);
 }
