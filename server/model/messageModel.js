@@ -13,9 +13,9 @@ const userSchema = {
   type: {
     type: String,
   },
-}
+};
 const options = {
-    timestamps: true,
+  timestamps: true,
 };
 
 const model = Schema.createSchema(userSchema, "messages", options);

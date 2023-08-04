@@ -1,7 +1,7 @@
 const userHandler = (io, socket, users) => {
   const connectUser = (userData) => {
     // authenticate user
-    
+
     // add to online users list
     addUser(userData, socket.id, users);
     io.emit("getUsers", users);
