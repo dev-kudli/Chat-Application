@@ -2,7 +2,10 @@ const express = require("express");
 
 const { addUser, getUser } = require("../controller/userController.js");
 const { getRecentMessages } = require("../controller/messageController.js");
-const { createGroup, deleteGroup } = require("../controller/groupController.js");
+const {
+  createGroup,
+  deleteGroup,
+} = require("../controller/groupController.js");
 
 const route = express.Router();
 

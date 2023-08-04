@@ -1,5 +1,5 @@
-const userModel = require("../model/userModel.js");
-const userGroupModel = require("../model/userModel.js");
+const userModel = require("../model/userModel");
+const userGroupModel = require("../model/userGroupModel");
 
 // user sign up
 const addUser = async (request, response) => {

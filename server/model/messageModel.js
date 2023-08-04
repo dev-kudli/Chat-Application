@@ -1,6 +1,6 @@
 const { Schema } = require("database");
 
-userSchema = {
+const userSchema = {
   senderId: {
     type: String,
   },
@@ -13,9 +13,8 @@ userSchema = {
   type: {
     type: String,
   },
-}
-
-options = {
+};
+const options = {
   timestamps: true,
 };
 

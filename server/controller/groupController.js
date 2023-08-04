@@ -13,16 +13,16 @@ const createGroup = async (request, response) => {
 
 // delete group
 const deleteGroup = async (request, response) => {
-    try {
-        const condition = { _id: request.body.groupId };
-        const result = await groupModel.deleteOne(condition)
-      response.status(200).json(result.deletedCount);
-    } catch (error) {
-      response.status(500).json(error);
-    }
-  };
+  try {
+    const condition = { _id: request.body.groupId };
+    const result = await groupModel.deleteOne(condition);
+    response.status(200).json(result.deletedCount);
+  } catch (error) {
+    response.status(500).json(error);
+  }
+};
 
 module.exports = {
-    createGroup,
-    deleteGroup
+  createGroup,
+  deleteGroup,
 };
