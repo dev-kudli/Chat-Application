@@ -1,10 +1,10 @@
 const { Schema } = require("database");
 
-const userSchema = {
+const groupMessageSchema = {
   senderId: {
     type: String,
   },
-  receiverId: {
+  groupId: {
     type: String,
   },
   text: {
@@ -13,11 +13,11 @@ const userSchema = {
   type: {
     type: String,
   },
-}
+};
 const options = {
-    timestamps: true,
+  timestamps: true,
 };
 
-const model = Schema.createSchema(userSchema, "messages", options);
+const model = Schema.createSchema(groupMessageSchema, "groupMessages", options);
 
 module.exports = model;
