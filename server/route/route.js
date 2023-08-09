@@ -1,6 +1,6 @@
 const express = require("express");
 
-const { addUser, getUser } = require("../controller/userController.js");
+const { addUser, addNewConversation, getConversations, getAllUsers } = require("../controller/userController.js");
 const { getRecentMessages } = require("../controller/messageController.js");
 const {
   createGroup,
@@ -10,7 +10,9 @@ const {
 const route = express.Router();
 
 route.post("/add-user", addUser);
-route.get("/users", getUser);
+route.post("/add-conversation", addNewConversation);
+route.get("/get-conversation", getConversations);
+route.get("/get-users", getAllUsers);
 
 route.get("/messages", getRecentMessages);
 

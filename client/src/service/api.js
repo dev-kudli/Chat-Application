@@ -13,9 +13,15 @@ export const addUser = async (data) => {
 }
 
 export const getUsers = async () => {
+    // try {
+    //     let response = await axios.get(`${url}/get-conversation?sub=${sub}`);
+    //     return response.data;
+    // } catch (error) {
+    //     console.log('Error while calling getUsers API ', error);
+    // }
     try {
-        let response = await axios.get(`${url}/users`);
-        return response.data
+        let response = await axios.get(`${url}/get-users`);
+        return response.data;
     } catch (error) {
         console.log('Error while calling getUsers API ', error);
     }

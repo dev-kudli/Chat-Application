@@ -19,11 +19,47 @@ const addUser = async (request, response) => {
   }
 };
 
-// user sign in
-const getUser = async (request, response) => {
+//add new conversation
+const addNewConversation = async (request, response) => {
   try {
-    const user = await userModel.find({});
-    response.status(200).json(user);
+    const { senderSub, receiverId } = request.body;
+    const updatedUser = await userModel.findOneAndUpdate(
+      { sub: senderSub },
+      { $push: { conversation: receiverId } },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      console.log('User not found');
+      return;
+    }
+
+    response.status(200).json(updatedUser);
+  } catch (error) {
+    response.status(500).json(error);
+  }
+}
+
+//get conversations
+const getConversations = async (request, response) => {
+  try {
+    console.log(request.query.sub);
+    const user = await userModel.findOne({ sub: request.query.sub });
+    
+    if (user) {
+      response.status(200).json(user.conversation);
+      return;
+    } else throw new Error('User not found')
+  } catch (error) {
+    response.status(500).json(error);
+  }
+}
+
+//get all users
+const getAllUsers = async (request, response) => {
+  try {
+    const users = await userModel.find({});
+    response.status(200).json(users);
   } catch (error) {
     response.status(500).json(error);
   }
@@ -41,6 +77,8 @@ const getUserGroups = async (request, response) => {
 
 module.exports = {
   addUser,
-  getUser,
   getUserGroups,
+  addNewConversation,
+  getAllUsers,
+  getConversations
 };
