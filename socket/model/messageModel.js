@@ -1,6 +1,9 @@
 const { Schema } = require("database");
 
 const userSchema = {
+  conversationId: {
+    type: "String"
+  },
   senderId: {
     type: String,
   },
