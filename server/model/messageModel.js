@@ -1,6 +1,9 @@
 const { Schema } = require("database");
 
-const userSchema = {
+const messageSchema = {
+  conversationId: {
+    type: String,
+  },
   senderId: {
     type: String,
   },
@@ -14,10 +17,11 @@ const userSchema = {
     type: String,
   },
 };
+
 const options = {
   timestamps: true,
 };
 
-const model = Schema.createSchema(userSchema, "messages", options);
+const model = Schema.createSchema(messageSchema, "messages", options);
 
 module.exports = model;
