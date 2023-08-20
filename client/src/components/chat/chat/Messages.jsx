@@ -101,7 +101,7 @@ const Messages = ({ person, conversation }) => {
 
             socket.current.emit('sendMessage', message);
 
-            await newMessages(message);
+            // await newMessages(message);
 
             setValue('');
             setFile();

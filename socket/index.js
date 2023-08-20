@@ -13,7 +13,11 @@ const WEBSOCKET_PORT = process.env.WEBSOCKET_PORT;
 dotenv.config();
 const app = express();
 const server = http.createServer(app);
-const io = socketIO(server);
+const io = socketIO(server, {
+  cors: {
+    origin: "http://localhost:3000"
+  }
+});
 Connection.connect();
 
 const onConnection = (socket) => {
