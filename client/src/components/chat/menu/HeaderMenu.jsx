@@ -3,7 +3,7 @@ import { useState, useContext } from 'react';
 import { MoreVert } from '@mui/icons-material';
 import { Menu, MenuItem, styled } from '@mui/material';
 
-import { googleLogout } from '@react-oauth/google';
+import { GoogleLogout } from 'react-google-login';
 import { AccountContext } from '../../../context/AccountProvider';
 import { UserContext } from '../../../context/UserProvider';
 
@@ -18,7 +18,7 @@ const MenuOption = styled(MenuItem)`
     color: #4A4A4A;
 `;
 
-const Logout = styled(googleLogout)`
+const Logout = styled(GoogleLogout)`
     border: none;
     box-shadow: none;
 `;
@@ -41,6 +41,7 @@ const HeaderMenu = () => {
     };
 
     const onSignoutSuccess = () => {
+        console.log('logout')
         alert("You have been logged out successfully");
         console.clear();
         setShowlogoutButton(false);
@@ -48,6 +49,10 @@ const HeaderMenu = () => {
         setAccount('');
         setPerson({});
     };
+
+    const handleLogoutFailure = () => {
+        console.log('Logout Error')
+    }
 
     const toggleDrawer = () => {
         setOpenDrawer(true);
@@ -74,16 +79,17 @@ const HeaderMenu = () => {
                 }}
             >
                 <MenuOption onClick={() => { handleClose(); toggleDrawer()}}>Profile</MenuOption>
-                <MenuOption onClick={() => { handleClose(); }}>
-                {/* { showlogoutButton ?
+                {/* <MenuOption onClick={() => { handleClose(); }}>
+                { showlogoutButton ?
                     <Logout
                         clientId={clientId}
                         buttonText="Logout"
                         onLogoutSuccess={onSignoutSuccess}
+                        onFailure={handleLogoutFailure}
                     >
-                    </Logout> : null
-                } */}
-                </MenuOption>
+                    </Logout>: null
+                }
+                </MenuOption> */}
             </Menu>
             <InfoDrawer open={openDrawer} setOpen={setOpenDrawer} profile={true} />
         </>

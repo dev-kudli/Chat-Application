@@ -1,6 +1,6 @@
 const express = require("express");
 
-const { addUser, getAllUsers } = require("../controller/userController.js");
+const { addUser, getAllUsers, getCurrentUser } = require("../controller/userController.js");
 const {
   newConversation,
   getConversation,
@@ -16,6 +16,7 @@ const route = express.Router();
 
 route.post("/add-user", addUser);
 route.get("/get-users", getAllUsers);
+route.get("/user/me", getCurrentUser);
 
 route.post("/conversation/add", newConversation);
 route.post("/conversation/get", getConversation);
@@ -25,5 +26,9 @@ route.post("/message/add", newMessage);
 
 route.post("/create-group", createGroup);
 route.post("/delete-group", deleteGroup);
+
+route.get("/test", (req, res, next) => {
+  res.send("Welcome to my chat application")
+})
 
 module.exports = route;

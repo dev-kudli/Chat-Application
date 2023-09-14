@@ -1,11 +1,11 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 
 import { Dialog, Typography, List, ListItem, Box, styled } from '@mui/material';
 
 import { GoogleLogin } from '@react-oauth/google';
 import jwt_decode from "jwt-decode";
 
-import { addUser } from '../../service/api';
+import { addUser, getUserSession, getCookie } from '../../service/api';
 import { AccountContext } from '../../context/AccountProvider';
 import { qrCodeImage } from '../../constants/data';
 
@@ -56,25 +56,39 @@ const LoginDialog = () => {
 
     const { setAccount, showloginButton, setShowloginButton, setShowlogoutButton } = useContext(AccountContext);
 
+    useEffect(() => {
+        const userSession = async () => {
+            let account = await getUserSession();
+            if (account.sub) {
+                loginSuccessContextUpdate(account);
+                console.log('user exists in cookie', account.sub)
+            }
+        }
+        userSession();
+    }, []);
+
     const onLoginSuccess = async (res) => {
-        let decoded = jwt_decode(res.credential);
-        console.log(decoded)
-        setAccount(decoded);
+        let account = jwt_decode(res.credential);
+        loginSuccessContextUpdate(account);
+        await addUser(account);
+    }
+
+    const loginSuccessContextUpdate = (account) => {
+        setAccount(account);
         setShowloginButton(false);
         setShowlogoutButton(true);
-        await addUser(decoded);
-    };
+    }
 
     const onLoginFailure = (res) => {
         console.log('Login Failed:', res);
     };
 
-    // const onSignoutSuccess = () => {
-    //     alert("You have been logged out successfully");
-    //     console.clear();
-    //     setShowloginButton(true);
-    //     setShowlogoutButton(false);
-    // };
+    const onSignoutSuccess = () => {
+        alert("You have been logged out successfully");
+        console.clear();
+        setShowloginButton(true);
+        setShowlogoutButton(false);
+    };
 
     return (
         <Dialog
@@ -85,6 +99,7 @@ const LoginDialog = () => {
         >
             <Component>
                 <Container>
+                    <button onClick={getCookie}>Get Cookie</button>
                     <Title>To use WhatsApp on your computer:</Title>
                     <StyledList>
                         <ListItem>1. Open WhatsApp on your phone</ListItem>
@@ -100,6 +115,9 @@ const LoginDialog = () => {
                                 buttonText=""
                                 onSuccess={onLoginSuccess}
                                 onError={onLoginFailure}
+                                cookiePolicy={'single_host_origin'}
+                                // useOneTap
+                                auto_select={false}
                             /> : null}
                     </Box>
                 </Box>

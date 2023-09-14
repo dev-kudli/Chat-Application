@@ -8,9 +8,9 @@ const messageHandler = (io, socket, users) => {
       await uploadNewMessage(data);
       const user = getUser(data.receiverId, users);
       if (user) io.to(user.socketId).emit("getMessage", data);
-      else {
-        console.log(`${data.receiverId} is offline`);
-      }
+      // else {
+      //   console.log(`${data.receiverId} is offline`);
+      // }
     } catch (err) {
       console.log(err);
     }
