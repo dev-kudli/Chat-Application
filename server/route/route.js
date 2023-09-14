@@ -1,6 +1,6 @@
 const express = require("express");
 
-const { addUser, getAllUsers, getCurrentUser, getCookie } = require("../controller/userController.js");
+const { addUser, getAllUsers, getCurrentUser } = require("../controller/userController.js");
 const {
   newConversation,
   getConversation,
@@ -17,8 +17,6 @@ const route = express.Router();
 route.post("/add-user", addUser);
 route.get("/get-users", getAllUsers);
 route.get("/user/me", getCurrentUser);
-
-route.get("/cookie/get", getCookie);
 
 route.post("/conversation/add", newConversation);
 route.post("/conversation/get", getConversation);
