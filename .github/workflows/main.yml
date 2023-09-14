@@ -29,7 +29,12 @@ jobs:
           port: ${{ secrets.PORT }}
           command_timeout: 30m
           script: | 
-            echo "Nice Job!!!"
+            cd /home/ec2-user/Chat-Application
+            git pull
+            cd /database && npm ci
+            cd ../server && npm ci
+            # npm run build
+            pm2 start index.js start --watch
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       # - uses: actions/checkout@v3
 
