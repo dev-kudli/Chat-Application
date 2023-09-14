@@ -20,22 +20,29 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - name: connect to ec2
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.HOSTNAME }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          port: ${{ secrets.PORT }}
+          command_timeout: 30m
+          script: | 
+            echo "Nice Job!!!"
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+      # - uses: actions/checkout@v3
 
       # Runs a single command using the runners shell
-      - name: Deploy in EC2
-        env:
-            PRIVATE_KEY: ${{ secrets.EC2_PRIVATE_KEY  }}
-            HOSTNAME : ${{ secrets.HOSTNAME  }}
-            USER_NAME : ${{ secrets.USER  }}
+      # - name: Deploy in EC2
+      #   env:
+      #       PRIVATE_KEY: ${{ secrets.EC2_PRIVATE_KEY  }}
+      #       HOSTNAME : ${{ secrets.HOSTNAME  }}
+      #       USER_NAME : ${{ secrets.USER  }}
             
-        run: |
-          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-          # chown -R ec2-user:ec2-user .ssh
-          chmod 700 .ssh
-          chmod 600 .ssh/authorized_keys
-          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME}
+      #   run: |
+      #     echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+      #     ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME}
           
             # #Now we have got the access of EC2 and we will start the deploy .
             # DIR="/home/ec2-user/Chat-Application"
