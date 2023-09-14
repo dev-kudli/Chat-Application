@@ -48,6 +48,7 @@ const Messages = ({ person, conversation }) => {
 
     useEffect(() => {
         socket.current.on('getMessage', data => {
+            console.log(data)
             setIncomingMessage({
                 ...data,
                 createdAt: Date.now()

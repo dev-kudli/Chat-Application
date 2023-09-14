@@ -5,7 +5,14 @@ const url = 'http://localhost:8000';
 
 export const addUser = async (data) => {
     try {
-        let response = await axios.post(`${url}/add-user`, data);
+        let response = await axios.post(`${url}/add-user`, data, {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            withCredentials: true,
+            credentials: 'include'
+        });
+        console.log(response.data);
         return response.data;
     } catch (error) {
         console.log('Error while calling addUser API ', error);
@@ -26,6 +33,39 @@ export const getUsers = async () => {
         console.log('Error while calling getUsers API ', error);
     }
 }
+
+export const getUserSession = async () => {
+    try {
+        let response = await axios.get(`${url}/user/me`, {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            withCredentials: true,
+            credentials: 'include'
+        });
+        return response.data;
+    } catch (error) {
+        console.log('Error while calling getUserSession API ', error);
+    }
+}
+
+
+export const getCookie = async (res) => {
+    try {
+        let response = await axios.get(`${url}/cookie/get`, {
+            headers: {
+                // 'Access-Control-Allow-Origin': 'http://localhost:3000',
+                'Content-Type': 'application/json'
+            },
+            withCredentials: true,
+            credentials: 'include'
+        });
+        console.log(response.data)
+        return response.data;
+    } catch (error) {
+        console.log('Error while calling getUserSession API ', error);
+    }
+};
 
 export const setConversation = async (data) => {
     try {
