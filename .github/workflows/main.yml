@@ -28,7 +28,7 @@ jobs:
           remote_path: /home/ec2-user/Chat-Application
           remote_host: "${{ secrets.HOSTNAME }}"
           remote_user: "${{ secrets.USER }}"
-          remote_key: "${{ secrets.SSH_PRIVATE_KEY }}"
+          remote_key: "${{ secrets.EC2_PRIVATE_KEY }}"
 
       # - name: connect to ec2
       #   uses: appleboy/ssh-action@v0.1.10
