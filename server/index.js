@@ -11,13 +11,16 @@ const route = require("./route/route");
 dotenv.config();
 const PORT = process.env.SERVER_PORT;
 
-Connection.connect();
-
 const app = express();
 
-app.listen(PORT, () =>
-  console.log(`Server is running successfully on PORT ${PORT}`),
-);
+app.listen(PORT, () => {
+  console.log(`Server is running successfully on PORT ${PORT}`)
+  try {
+    Connection.connect();
+  } catch(e) {
+    process.exit(1);
+  }
+});
 
 app.use(bodyParser.json({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
