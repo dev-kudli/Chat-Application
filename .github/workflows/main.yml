@@ -22,7 +22,7 @@ jobs:
     steps:
       - name: get current path
         run: |
-          ls $GITHUB_WORKSPACE
+          echo $GITHUB_WORKSPACE
       - name: rsync deployments
         uses: burnett01/rsync-deployments@5.1
         with:
