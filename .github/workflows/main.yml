@@ -32,6 +32,9 @@ jobs:
             
         run: |
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+          chown -R ${USER_NAME}:${USER_NAME} .ssh
+          chmod 700 .ssh
+          chmod 600 .ssh/authorized_keys
           ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME}
           
             # #Now we have got the access of EC2 and we will start the deploy .
