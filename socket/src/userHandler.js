@@ -4,6 +4,7 @@ const userHandler = (io, socket, users) => {
 
     // add to online users list
     addUser(userData, socket.id, users);
+    console.log('Added user', userData.name)
     io.emit("getUsers", users);
   };
 
