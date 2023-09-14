@@ -29,6 +29,7 @@ jobs:
           port: ${{ secrets.PORT }}
           command_timeout: 30m
           script: | 
+            pm2 delete all
             cd /home/ec2-user/Chat-Application
             git pull
             cd ./database && npm ci
