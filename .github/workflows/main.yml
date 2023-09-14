@@ -31,7 +31,7 @@ jobs:
           script: | 
             cd /home/ec2-user/Chat-Application
             git pull
-            cd /database && npm ci
+            cd ./database && npm ci
             cd ../server && npm ci
             # npm run build
             pm2 start index.js start --watch
