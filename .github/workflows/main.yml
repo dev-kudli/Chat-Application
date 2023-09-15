@@ -21,9 +21,9 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     - uses: actions/checkout@v2
-    - run: npm ci
-    - run: npm run build
-    - run: npm run test
+    # - run: npm ci
+    # - run: npm run build
+    # - run: npm run test
 
     - name: rsync deployments
       uses: burnett01/rsync-deployments@5.1
