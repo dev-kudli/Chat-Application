@@ -27,7 +27,7 @@ jobs:
 
     - name: Deploy with rsync
       run: |
-        rsync -avz --delete --exclude='.git' -e "ssh -i ./ssh_key" ./server ${{ secrets.USER }}@${{ secrets.HOSTNAME }}:/home/ec2-user
+        rsync -avz --delete --exclude='.git' -e "ssh -i ./ssh_key" ./server ec2-user@54.145.40.244:/home/ec2-user
 
       # - name: connect to ec2
       #   uses: appleboy/ssh-action@v0.1.10
