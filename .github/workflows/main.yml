@@ -20,7 +20,7 @@ jobs:
     if: github.ref == 'refs/heads/master'
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     # - run: npm ci
     # - run: npm run build
     # - run: npm run test
@@ -30,27 +30,11 @@ jobs:
       with:
         switches: -avzr --delete
         path: ./*
-        remote_path: //home/ec2-user
-        remote_host: ec2-54-145-254-182.compute-1.amazonaws.com
-        remote_user: ec2-user
+        remote_path: //home/ec2-user/Chat-Application
+        remote_host: ${{ secrets.HOSTNAME }}
+        remote_user: ${{ secrets.USER }}
         remote_key: "${{ secrets.EC2_PRIVATE_KEY }}"
-
-      # - name: connect to ec2
-      #   uses: appleboy/ssh-action@v0.1.10
-      #   with:
-      #     host: ${{ secrets.HOSTNAME }}
-      #     username: ${{ secrets.USER }}
-      #     key: ${{ secrets.EC2_PRIVATE_KEY }}
-      #     port: ${{ secrets.PORT }}
-      #     command_timeout: 30m
-      #     script: | 
-      #       pm2 delete all
-      #       cd /home/ec2-user/Chat-Application
-      #       git pull
-      #       cd ./database && npm ci
-      #       cd ../server && npm ci
-      #       # npm run build
-      #       pm2 start index.js --watch
+        
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       # - uses: actions/checkout@v3
 
