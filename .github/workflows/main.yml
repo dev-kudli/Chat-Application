@@ -20,15 +20,20 @@ jobs:
     if: github.ref == 'refs/heads/master'
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    - name: Set up SSH key
-      run: |
-        echo "${{ secrets.EC2_PRIVATE_KEY }}" > ssh_key
-        chmod 600 ssh_key
-        ssh-keyscan -H 54.145.40.244 >> ~/.ssh/known_hosts
+    - uses: actions/checkout@v2
+    - run: npm ci
+    - run: npm run build
+    - run: npm run test
 
-    - name: Deploy with rsync
-      run: |
-        rsync -avz --delete --exclude='.git' -e "ssh -i ./ssh_key" ./server ec2-user@54.145.40.244:/home/ec2-user
+    - name: rsync deployments
+      uses: burnett01/rsync-deployments@5.1
+      with:
+        switches: -avzr --delete
+        path: ./*
+        remote_path: //home/ec2-user
+        remote_host: ec2-54-145-254-182.compute-1.amazonaws.com
+        remote_user: ec2-user
+        remote_key: "${{ secrets.EC2_PRIVATE_KEY }}"
 
       # - name: connect to ec2
       #   uses: appleboy/ssh-action@v0.1.10
