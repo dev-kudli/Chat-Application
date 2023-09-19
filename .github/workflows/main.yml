@@ -1,12 +1,15 @@
 # Basic workflow to deploy on EC2
 
-name: CI
+name: Texty Server Deploy
 
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ master ]
+    branches:
+      - master
+    paths:
+      - server/**
     
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -21,19 +24,25 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     - uses: actions/checkout@v3
-    # - run: npm ci
-    # - run: npm run build
-    # - run: npm run test
+    - run: cd ./database
+    - run: npm ci
+    - run: cd ../server
+    - run: npm ci
 
     - name: rsync deployments
       uses: burnett01/rsync-deployments@5.1
       with:
         switches: -avzr --delete
-        path: ./*
-        remote_path: //home/ec2-user/Chat-Application
+        path: ./server/*
+        remote_path: //home/ec2-user/Chat-Application/server
         remote_host: ${{ secrets.HOSTNAME }}
         remote_user: ${{ secrets.USER }}
         remote_key: "${{ secrets.EC2_PRIVATE_KEY }}"
+
+    - name: start server
+      run: |
+        echo pwd
+        pm2 start ecosystem.config.js --env dev
         
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       # - uses: actions/checkout@v3
