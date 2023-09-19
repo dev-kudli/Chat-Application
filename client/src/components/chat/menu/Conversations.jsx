@@ -25,9 +25,9 @@ const Conversations = ({ text }) => {
     const { account, socket, setActiveUsers } = useContext(AccountContext);
     useEffect(() => {
         const fetchData = async () => {
-            let data = await getUsers();
-            let fiteredData = data.filter(user => user.name.toLowerCase().includes(text.toLowerCase()));
-            setUsers(fiteredData);
+            let users = await getUsers();
+            let fiteredUsers = users.filter(user => user.name.toLowerCase().includes(text.toLowerCase()));
+            setUsers(fiteredUsers);
         }
         fetchData();
     }, [text]);

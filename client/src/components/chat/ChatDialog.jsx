@@ -17,15 +17,15 @@ const LeftComponent = styled(Box)`
 `;
     
 const RightComponent = styled(Box)`
-    width: 73%;
-    min-width: 300px;
+    width: 75%;
+    min-width: 700px;
     height: 100%;
     border-left: 1px solid rgba(0, 0, 0, 0.14);
 `;
 
 const dialogStyle = {
     height: '95%',
-    width: '100%',
+    width: '90%',
     margin: '20px',
     maxWidth: '100%',
     maxHeight: '100%',

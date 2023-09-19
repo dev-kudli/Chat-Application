@@ -8,7 +8,7 @@ const addUser = async (request, response) => {
 
     const cookieConfig = {
       httpOnly: true, // to disable accessing cookie via client side js
-      maxAge: 24*3600, // ttl in seconds (remove this option and cookie will die when browser is closed)
+      maxAge: 5184000, // ttl in seconds (remove this option and cookie will die when browser is closed)
       signed: true, // if you use the secret with cookieParser
       // secure: true, // to force https (if you use it)
       // sameSite: 'None', // For cross-origin requests

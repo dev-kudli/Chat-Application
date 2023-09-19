@@ -5,7 +5,7 @@ import { Dialog, Typography, List, ListItem, Box, styled } from '@mui/material';
 import { GoogleLogin } from '@react-oauth/google';
 import jwt_decode from "jwt-decode";
 
-import { addUser, getUserSession, getCookie } from '../../service/api';
+import { addUser, getUserSession } from '../../service/api';
 import { AccountContext } from '../../context/AccountProvider';
 import { qrCodeImage } from '../../constants/data';
 
@@ -59,7 +59,8 @@ const LoginDialog = () => {
     useEffect(() => {
         const userSession = async () => {
             let account = await getUserSession();
-            if (account.sub) {
+            console.log(account)
+            if (account && account.sub) {
                 loginSuccessContextUpdate(account);
                 console.log('user exists in cookie', account.sub)
             }
@@ -69,6 +70,7 @@ const LoginDialog = () => {
 
     const onLoginSuccess = async (res) => {
         let account = jwt_decode(res.credential);
+        console.log('login success')
         loginSuccessContextUpdate(account);
         await addUser(account);
     }
@@ -83,13 +85,6 @@ const LoginDialog = () => {
         console.log('Login Failed:', res);
     };
 
-    const onSignoutSuccess = () => {
-        alert("You have been logged out successfully");
-        console.clear();
-        setShowloginButton(true);
-        setShowlogoutButton(false);
-    };
-
     return (
         <Dialog
             open={true}
@@ -99,7 +94,6 @@ const LoginDialog = () => {
         >
             <Component>
                 <Container>
-                    <button onClick={getCookie}>Get Cookie</button>
                     <Title>To use WhatsApp on your computer:</Title>
                     <StyledList>
                         <ListItem>1. Open WhatsApp on your phone</ListItem>
@@ -116,7 +110,6 @@ const LoginDialog = () => {
                                 onSuccess={onLoginSuccess}
                                 onError={onLoginFailure}
                                 cookiePolicy={'single_host_origin'}
-                                // useOneTap
                                 auto_select={false}
                             /> : null}
                     </Box>
