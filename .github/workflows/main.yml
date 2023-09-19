@@ -24,25 +24,24 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     - uses: actions/checkout@v3
-    - run: ls
-    - run: cd database
-    - run: ls
-    # - run: cd ../server
-    # - run: npm ci
 
     - name: rsync deployments
       uses: burnett01/rsync-deployments@5.1
       with:
         switches: -avzr --delete
-        path: ./server/*
-        remote_path: //home/ec2-user/Chat-Application/server
+        path: ./*
+        remote_path: //home/ec2-user/Chat-Application
         remote_host: ${{ secrets.HOSTNAME }}
         remote_user: ${{ secrets.USER }}
         remote_key: "${{ secrets.EC2_PRIVATE_KEY }}"
 
-    - name: start server
+    - name: install dependencies
       run: |
         echo pwd
+        cd /database
+        npm ci
+        cd ../server
+        npm ci
         pm2 start ecosystem.config.js --env dev
         
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
