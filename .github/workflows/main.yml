@@ -25,9 +25,9 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - run: cd ./database
-    - run: npm ci
-    - run: cd ../server
-    - run: npm ci
+    - run: pwd
+    # - run: cd ../server
+    # - run: npm ci
 
     - name: rsync deployments
       uses: burnett01/rsync-deployments@5.1
