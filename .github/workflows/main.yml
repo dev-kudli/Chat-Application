@@ -37,8 +37,8 @@ jobs:
 
     - name: install dependencies
       run: |
-        echo pwd
-        cd /database
+        ls
+        cd database
         npm ci
         cd ../server
         npm ci
