@@ -25,9 +25,8 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - run: ls
-    - run: cd ./database
+    - run: cd database
     - run: ls
-    - run: pwd
     # - run: cd ../server
     # - run: npm ci
 
