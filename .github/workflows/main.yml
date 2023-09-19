@@ -25,6 +25,12 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    - name: install db dependencies
+      run: cd database; npm ci
+
+    - name: install server dependencies
+      run: cd server; npm ci
+
     - name: rsync deployments
       uses: burnett01/rsync-deployments@5.1
       with:
@@ -34,15 +40,6 @@ jobs:
         remote_host: ${{ secrets.HOSTNAME }}
         remote_user: ${{ secrets.USER }}
         remote_key: "${{ secrets.EC2_PRIVATE_KEY }}"
-
-    - name: install dependencies
-      run: |
-        ls
-        cd database
-        npm ci
-        cd ../server
-        npm ci
-        pm2 start ecosystem.config.js --env dev
         
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       # - uses: actions/checkout@v3
